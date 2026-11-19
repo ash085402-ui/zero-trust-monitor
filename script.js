@@ -189,10 +189,126 @@ document.querySelectorAll('.copy-code').forEach(button => {
   });
 });
 
+// --- Editable Python example simulator; validates text and never executes Python ---
+const codeRunOutput = document.getElementById('codeRunOutput');
+
+function validatePythonText(source) {
+  const expectedClosers = { ')': '(', ']': '[', '}': '{' };
+  const stack = [];
+  let quote = '';
+  let tripleQuote = false;
+  let escaped = false;
+  let comment = false;
+
+  for (let index = 0; index < source.length; index += 1) {
+    const character = source[index];
+    const triple = source.slice(index, index + 3);
+    if (comment) {
+      if (character === '\n') comment = false;
+      continue;
+    }
+    if (quote) {
+      if (escaped) escaped = false;
+      else if (character === '\\') escaped = true;
+      else if (tripleQuote && triple === quote.repeat(3)) {
+        quote = '';
+        tripleQuote = false;
+        index += 2;
+      } else if (!tripleQuote && character === quote) quote = '';
+      continue;
+    }
+    if (character === '#') comment = true;
+    else if ((character === '"' || character === "'") && triple === character.repeat(3)) {
+      quote = character;
+      tripleQuote = true;
+      index += 2;
+    } else if (character === '"' || character === "'") quote = character;
+    else if ('([{'.includes(character)) stack.push(character);
+    else if (expectedClosers[character] && stack.pop() !== expectedClosers[character]) {
+      throw new Error(`Սխալ փակագիծ՝ «${character}»։`);
+    }
+  }
+
+  if (quote) throw new Error('Տողային արժեքը փակված չէ։');
+  if (stack.length) throw new Error('Փակագծերից մեկը փակված չէ։');
+  const suiteStart = /^\s*(?:async\s+def|def|if|elif|else|for|while|try|except|finally|with)\b.*$/;
+  source.split('\n').forEach((line, index) => {
+    if (suiteStart.test(line) && !/:\s*(?:#.*)?$/.test(line)) {
+      throw new Error(`${index + 1}-րդ տողում բացակայում է «:»-ը։`);
+    }
+  });
+}
+
+function simulateExample(codeId, exampleType) {
+  const source = document.getElementById(codeId)?.innerText || '';
+  if (!source.trim()) throw new Error('Կոդի դաշտը դատարկ է։');
+  validatePythonText(source);
+
+  if (exampleType === 'token') {
+    const required = [
+      ['@verify_zero_trust_token', /@verify_zero_trust_token/],
+      ['device_trusted', /\bdevice_trusted\b/],
+      ['MFARequired', /\bMFARequired\b/],
+      ['policy_engine.evaluate', /\bpolicy_engine\s*\.\s*evaluate\s*\(/]
+    ];
+    const missing = required.filter(([, pattern]) => !pattern.test(source)).map(([name]) => name);
+    if (missing.length) throw new Error(`Չգտնվեցին պարտադիր տարրերը՝ ${missing.join(', ')}։`);
+    if (!/if\s+not\s+device_trusted\s*:/.test(source)) {
+      throw new Error('Չգտնվեց սարքի վստահությունը ստուգող «if not device_trusted:» պայմանը։');
+    }
+    return [
+      'SIMULATION · Zero Trust token validation',
+      'Trusted device: claims validated; policy_engine.evaluate(role, claims) → ALLOW',
+      'Untrusted device: MFARequired raised → ACCESS DENIED / MFA_REQUIRED',
+      'Python չի գործարկվել. արդյունքը հաշվարկվել է կոդի կառուցվածքից։'
+    ].join('\n');
+  }
+
+  const required = [
+    ['psutil', /\bpsutil\b/],
+    ['collect_security_metrics', /\bcollect_security_metrics\b/],
+    ['logging.info', /\blogging\s*\.\s*info\s*\(/]
+  ];
+  const missing = required.filter(([, pattern]) => !pattern.test(source)).map(([name]) => name);
+  if (missing.length) throw new Error(`Չգտնվեցին պարտադիր տարրերը՝ ${missing.join(', ')}։`);
+  const values = { cpu_percent: '18.4%', memory_percent: '42.1%', connections: '12' };
+  const metricNames = [...source.matchAll(/["']([\w]+)["']\s*:/g)].map((match) => match[1]);
+  const metricOutput = metricNames.length
+    ? metricNames.map((name) => `  ${name}: ${values[name] || 'sample value'}`).join('\n')
+    : '  (չսահմանված չափումներ)';
+  return [
+    'SIMULATION · System security metrics',
+    'Status: OK · collect_security_metrics() completed',
+    'Metrics:', metricOutput,
+    'logging.info("zt_metrics", extra=metrics) → recorded',
+    'Python չի գործարկվել. psutil/logging գործողությունները մոդելավորված են։'
+  ].join('\n');
+}
+
+document.querySelectorAll('.run-code').forEach(button => {
+  button.addEventListener('click', () => {
+    if (!codeRunOutput) return;
+    try {
+      codeRunOutput.textContent = simulateExample(button.dataset.run, button.dataset.example);
+      codeRunOutput.classList.remove('has-error');
+    } catch (error) {
+      codeRunOutput.textContent = `SIMULATION · ERROR\n${error.message}`;
+      codeRunOutput.classList.add('has-error');
+    }
+  });
+});
+
 // --- Zero Trust Python-backend simulator ---
 const verifyButton = document.getElementById('verifyBtn');
 const roleCheck = document.getElementById('roleCheck');
 const deviceStatus = document.getElementById('deviceStatus');
+const deviceChecks = [...document.querySelectorAll('.device-check')].map(input => ({
+  input,
+  label: input.closest('label').querySelector('b').textContent
+}));
+const deviceHealthIndicator = document.getElementById('deviceHealthIndicator');
+const deviceHealthPercent = document.getElementById('deviceHealthPercent');
+const deviceHealthStatus = document.getElementById('deviceHealthStatus');
 const responseStatus = document.getElementById('responseStatus');
 const backendResponse = document.getElementById('backendResponse');
 const httpResult = document.getElementById('httpResult');
@@ -217,6 +333,25 @@ function addLog(type, message) {
   eventCount.textContent = `${eventTotal} events`;
 }
 
+function updateDeviceHealth() {
+  const checkedCount = deviceChecks.filter(({ input }) => input.checked).length;
+  const trusted = deviceStatus.value === 'Trusted';
+  const score = Math.round(((checkedCount + Number(trusted)) / (deviceChecks.length + 1)) * 100);
+  const status = deviceStatus.value === 'Damaged' ? 'Compromised / Damaged'
+    : deviceStatus.value === 'Unverified' ? 'Unverified'
+      : checkedCount < deviceChecks.length ? 'Compromised'
+        : trusted ? 'Healthy' : 'Untrusted';
+
+  deviceHealthPercent.textContent = `${score}%`;
+  deviceHealthStatus.textContent = status;
+  deviceHealthIndicator.classList.toggle('healthy', status === 'Healthy');
+  deviceHealthIndicator.classList.toggle('compromised', status !== 'Healthy');
+}
+
+deviceChecks.forEach(({ input }) => input.addEventListener('change', updateDeviceHealth));
+deviceStatus.addEventListener('change', updateDeviceHealth);
+updateDeviceHealth();
+
 verifyButton?.addEventListener('click', () => {
   verifyButton.disabled = true;
   verifyButton.firstChild.textContent = 'Python backend-ը մշակում է... ';
@@ -227,11 +362,22 @@ verifyButton?.addEventListener('click', () => {
   setTimeout(() => {
     const role = roleCheck.value;
     const trusted = deviceStatus.value === 'Trusted';
+    const failedChecks = deviceChecks.filter(({ input }) => !input.checked).map(({ label }) => label);
+    const damagedState = ['Damaged', 'Unverified'].includes(deviceStatus.value);
     let granted = trusted && role === 'Admin';
 
     if (trusted && role === 'Operator') granted = true;
 
-    if (!trusted) {
+    if (failedChecks.length || damagedState) {
+      const reasons = [...failedChecks];
+      if (damagedState) reasons.push(`Device status: ${deviceStatus.value}`);
+      const reason = reasons.join(', ');
+      responseStatus.className = 'response-status denied';
+      responseStatus.textContent = 'Access Denied / Device Integrity Check Failed';
+      backendResponse.textContent = `Python: Device integrity check failed (${reason}). Access blocked.`;
+      httpResult.textContent = 'HTTP 403 · DEVICE_INTEGRITY_FAILED · /api/v1/request';
+      addLog('deny', `${role.toLowerCase()} · device_integrity_failed · ${reason}`);
+    } else if (!trusted) {
       responseStatus.className = 'response-status denied';
       responseStatus.textContent = 'Access Denied / MFA Required';
       backendResponse.textContent = `Python: Untrusted device — ${role} role cannot establish a trusted session.`;

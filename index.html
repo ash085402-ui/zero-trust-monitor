@@ -75,6 +75,40 @@
         <div class="scan-card scan-card-top"><span class="pulse-dot"></span><div><small>ՍՏՈՒԳՎԱԾ ՍԵՍԻԱ</small><b>JWT-VERIFY</b></div></div>
         <div class="scan-card scan-card-bottom"><span class="shield-icon">✓</span><div><small>ԱՌԱՆՁՆԱՀԱՏԿՈՒԹՅՈՒՆ</small><b>RISK: LOW</b></div></div>
       </div>
+      <div class="home-long-content">
+        <section class="home-detail-block" aria-labelledby="home-flow-title">
+          <div class="home-section-heading">
+            <div class="eyebrow"><span>01</span> Հարցման ամբողջական ցիկլը</div>
+            <h2 id="home-flow-title">Ինչպես է աշխատում համակարգը</h2>
+            <p>Յուրաքանչյուր գործողություն սկսվում է նոր ստուգմամբ։ Python ծառայությունը համադրում է ինքնությունը, սարքի վիճակը, հարցման համատեքստը և պահանջվող իրավունքը։</p>
+          </div>
+          <ol class="home-request-flow">
+            <li><span>01</span><div><h3>Օգտատիրոջ նույնականացում</h3><p>API-ն ստանում է հարցումն ու օգտատիրոջ ինքնությունը և այն կապում կոնկրետ գործողության ու ռեսուրսի հետ։</p></div></li>
+            <li><span>02</span><div><h3>Սարքի վիճակի ստուգում</h3><p>Գնահատվում են Device Health-ը, համակարգի ամբողջականությունը, պաշտպանությունը, հավաստագիրը և psutil-ով դիտվող գործընթացների վիճակը։</p></div></li>
+            <li><span>03</span><div><h3>Token-ի վավերացում</h3><p>Ստուգվում են JWT ստորագրությունը, issuer-ը, audience-ը, ժամկետը և պահանջվող claims-ը։ Վավեր token-ը ինքնուրույն հասանելիության իրավունք չէ։</p></div></li>
+            <li><span>04</span><div><h3>Zero Trust քաղաքականության ստուգում</h3><p>RBAC/ABAC կանոնները համադրում են դերը, սարքի վիճակը, սեսիայի ռիսկը և պահանջվող գործողությունը՝ տրամադրելով միայն նվազագույն արտոնությունը։</p></div></li>
+            <li><span>05</span><div><h3>Որոշում և արձագանք</h3><p>Հարցումը թույլատրվում կամ մերժվում է. բարձր ռիսկի դեպքում կարող է պահանջվել MFA կամ սահմանափակվել սեսիան։</p></div></li>
+            <li><span>06</span><div><h3>Python log և աուդիտ</h3><p>Որոշման պատճառը, օգտատերը, սարքը և արդյունքը գրանցվում են correlation ID-ով՝ հետագծման և միջադեպի վերլուծության համար։</p></div></li>
+          </ol>
+        </section>
+        <section class="home-detail-block" aria-labelledby="home-metrics-title">
+          <div class="home-section-heading"><div class="eyebrow"><span>02</span> Անվտանգության արժեք</div><h2 id="home-metrics-title">Հիմնական ցուցանիշներ</h2></div>
+          <div class="home-impact-grid">
+            <article><span>Յուրաքանչյուր հարցման պահին</span><h3>Անընդհատ ստուգում</h3><p>Ինքնությունն ու գործողության իրավունքը նորից են գնահատվում, ոչ միայն սեսիայի սկզբում։</p></article>
+            <article><span>Սեսիայի ողջ ընթացքում</span><h3>Սեսիայի վերահսկում</h3><p>Ռիսկի փոփոխությունը կարող է սկսել token-ի նոր ստուգում, MFA կամ սեսիայի սահմանափակում։</p></article>
+            <article><span>Նվազագույն արտոնություն</span><h3>Lateral movement-ի նվազեցում</h3><p>Ռեսուրսի մակարդակով ստուգումները սահմանափակում են վարկաբեկված հաշվի կամ սարքի տարածումը։</p></article>
+            <article><span>Պատճառը և արդյունքը</span><h3>Թափանցիկ աուդիտ</h3><p>Մատյանները կապում են օգտատիրոջը, սարքը, policy որոշումը և գործողության արդյունքը։</p></article>
+          </div>
+        </section>
+        <section class="home-detail-block" aria-labelledby="home-scenarios-title">
+          <div class="home-section-heading"><div class="eyebrow"><span>03</span> Գործնական կիրառություն</div><h2 id="home-scenarios-title">Կիրառման սցենարներ</h2></div>
+          <div class="home-scenario-grid">
+            <article><span>01 / ՍԵՐՎԵՐՆԵՐ</span><h3>Սերվերային կառավարում</h3><p>Ադմինիստրատորի մուտքը հաստատվում է ըստ դերի և սարքի վիճակի, իսկ թույլատրված փոփոխությունները գրանցվում են։</p></article>
+            <article><span>02 / ԿՐԻՏԻԿԱԿԱՆ ՀԱՆԳՈՒՅՑՆԵՐ</span><h3>Կառավարման հանգույցների հսկում</h3><p>Զգայուն հանգույցների համար կիրառվում են խիստ policy-ներ, սարքի հավաստագրում և գործողությունների աուդիտ։</p></article>
+            <article><span>03 / ԱՆՈՄԱԼԻԱՆԵՐ</span><h3>Արագ արձագանք</h3><p>Անսովոր գործընթացը կամ ցանցային ակտիվությունը կարող է բարձրացնել ռիսկը, սկսել նոր ստուգում և արգելափակել հարցումը։</p></article>
+          </div>
+        </section>
+      </div>
     </section>
 
     <section class="ticker tab-view" id="home-ticker" aria-label="Համակարգի տեխնիկական ցուցիչներ">
@@ -143,8 +177,8 @@
       </div>
       <div class="code-example-grid">
         <article class="code-example">
-          <header><div><span>Python</span><b>Տոկենի Zero Trust վավերացում</b></div><button type="button" class="copy-code" data-copy="tokenCode">Պատճենել կոդը</button></header>
-          <pre><code id="tokenCode"><span class="py-decorator">@verify_zero_trust_token</span>
+          <header><div><span>Python</span><b>Տոկենի Zero Trust վավերացում</b></div><div class="code-actions"><button type="button" class="run-code" data-run="tokenCode" data-example="token">Run</button><button type="button" class="copy-code" data-copy="tokenCode">Պատճենել կոդը</button></div></header>
+          <pre><code id="tokenCode" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Խմբագրելի Python օրինակ՝ Zero Trust տոկենի վավերացում"><span class="py-decorator">@verify_zero_trust_token</span>
 <span class="py-keyword">async def</span> <span class="py-function">open_resource</span>(request, device_trusted: <span class="py-type">bool</span>):
     claims = <span class="py-keyword">await</span> request.state.token.claims()
     role = claims.get(<span class="py-string">"role"</span>)
@@ -155,8 +189,8 @@
     <span class="py-keyword">return</span> policy_engine.evaluate(role, claims)</code></pre>
         </article>
         <article class="code-example">
-          <header><div><span>Python</span><b>Համակարգային մետրիկների հավաքում</b></div><button type="button" class="copy-code" data-copy="metricsCode">Պատճենել կոդը</button></header>
-          <pre><code id="metricsCode"><span class="py-keyword">import</span> psutil
+          <header><div><span>Python</span><b>Համակարգային մետրիկների հավաքում</b></div><div class="code-actions"><button type="button" class="run-code" data-run="metricsCode" data-example="metrics">Run</button><button type="button" class="copy-code" data-copy="metricsCode">Պատճենել կոդը</button></div></header>
+          <pre><code id="metricsCode" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Խմբագրելի Python օրինակ՝ համակարգային մետրիկների հավաքում"><span class="py-keyword">import</span> psutil
 <span class="py-keyword">import</span> logging
 
 <span class="py-keyword">def</span> <span class="py-function">collect_security_metrics</span>():
@@ -169,6 +203,10 @@
     <span class="py-keyword">return</span> metrics</code></pre>
         </article>
       </div>
+      <section class="code-console" aria-label="Կոդի սիմուլյացիայի արդյունք">
+        <header><span>Simulation console</span><small>JavaScript simulation · Python չի գործարկվում</small></header>
+        <pre id="codeRunOutput" role="status" aria-live="polite">Սեղմեք Run՝ ընտրված օրինակի սիմուլյացիան տեսնելու համար։</pre>
+      </section>
     </section>
 
     <section class="section demo-section tab-view" id="demo" role="tabpanel" aria-labelledby="nav-demo">
@@ -192,8 +230,20 @@
                 <div class="panel-title"><span>Մուտքի կապի ստուգում</span><small>REQUEST #ZT-<b id="requestId">1042</b></small></div>
                 <div class="checks">
                   <label><span>Օգտատերի դերը</span><select id="roleCheck"><option value="Admin">Admin</option><option value="Operator">Operator</option><option value="Guest">Guest</option></select></label>
-                  <label><span>Սարքի կարգավիճակը</span><select id="deviceStatus"><option value="Trusted">Trusted</option><option value="Untrusted">Untrusted</option></select></label>
+                  <label><span>Սարքի կարգավիճակը</span><select id="deviceStatus"><option value="Trusted">Trusted</option><option value="Untrusted">Untrusted</option><option value="Damaged">Compromised / Damaged</option><option value="Unverified">Unverified</option></select></label>
                 </div>
+                <section class="device-health" aria-labelledby="deviceHealthTitle">
+                  <div class="device-health-header">
+                    <div><small>DEVICE HEALTH / INTEGRITY</small><h4 id="deviceHealthTitle">Սարքի առողջություն</h4></div>
+                    <div class="device-health-score healthy" id="deviceHealthIndicator" role="status" aria-live="polite"><strong id="deviceHealthPercent">100%</strong><span id="deviceHealthStatus">Healthy</span></div>
+                  </div>
+                  <div class="device-health-checks">
+                    <label><input class="device-check" id="firewallCheck" type="checkbox" checked><span><b>Firewall &amp; Antivirus Active</b><small>Ակտիվ պաշտպանություն և միջնապատնեշ</small></span></label>
+                    <label><input class="device-check" id="integrityCheck" type="checkbox" checked><span><b>System / Config Integrity OK</b><small>Համակարգի և կարգավորումների ամբողջականություն</small></span></label>
+                    <label><input class="device-check" id="processCheck" type="checkbox" checked><span><b>No Suspicious Processes (psutil)</b><small>Կասկածելի գործընթացներ չեն հայտնաբերվել</small></span></label>
+                    <label><input class="device-check" id="certificateCheck" type="checkbox" checked><span><b>Verified Device Certificate</b><small>Սարքի վավերացված հավաստագիր</small></span></label>
+                  </div>
+                </section>
                 <button class="verify-button" id="verifyBtn" type="button">Ստուգել մուտքը (Simulate Request) <span>→</span></button>
               </div>
               <div class="result-panel" id="resultPanel" aria-live="polite">
