@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="hy">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B1120">
+  <meta name="description" content="Zero Trust անվտանգության մոդելի կիրառմամբ կառավարման մշտադիտարկման հավելվածի մշակում Python միջավայրում։">
+  <meta name="keywords" content="Zero Trust, Python, FastAPI, մշտադիտարկում, կիբերանվտանգություն">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hy_AM">
+  <meta property="og:title" content="Zero Trust Monitor — կառավարման մշտադիտարկում">
+  <meta property="og:description" content="Անընդհատ ստուգում, միկրոհատվածավորում և բացարձակ վերահսկողություն Python միջավայրում։">
+  <title>Zero Trust Monitor | Python-ում մշտադիտարկման համակարգ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500;600;700;800&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Zero Trust Monitor","applicationCategory":"SecurityApplication","operatingSystem":"Web, Linux, Windows","programmingLanguage":"Python","description":"Zero Trust անվտանգության մոդելով կառավարման մշտադիտարկման հավելված։","offers":{"@type":"Offer","price":"0","priceCurrency":"AMD"}}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Անցնել բովանդակությանը</a>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="header" id="top">
+    <nav class="nav container" aria-label="Հիմնական նավիգացիա">
+      <a class="brand" href="#top" aria-label="Zero Trust Monitor գլխավոր էջ">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>ZERO<span class="accent">TRUST</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Բացել ընտրացանկը">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="nav-links" role="tablist" aria-label="Կայքի բաժիններ">
+        <a class="active" id="nav-home" href="#home" role="tab" aria-selected="true" aria-controls="home" data-tab="home">Գլխավոր</a>
+        <a id="nav-project" href="#project" role="tab" aria-selected="false" aria-controls="project" data-tab="project">Նախագիծ</a>
+        <a id="nav-architecture" href="#architecture" role="tab" aria-selected="false" aria-controls="architecture" data-tab="architecture">Ճարտարապետություն</a>
+        <a id="nav-modules" href="#modules" role="tab" aria-selected="false" aria-controls="modules" data-tab="modules">Մոդուլներ</a>
+        <a id="nav-demo" href="#demo" role="tab" aria-selected="false" aria-controls="demo" data-tab="demo">Դեմո</a>
+      </div>
+      <a class="nav-status" href="#demo" data-tab="demo"><span></span> Համակարգը առցանց</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container tab-view" id="home" role="tabpanel" aria-labelledby="nav-home hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span>01</span> Ապահով կառավարման պլատֆորմ</div>
+        <h1 id="hero-title">Zero Trust անվտանգության մոդելի կիրառմամբ կառավարման մշտադիտարկման հավելվածի մշակում <em>Python միջավայրում</em></h1>
+        <p class="hero-lead">Անընդհատ աութենտիֆիկացում, ռիսկերի գնահատում և ցանցային գործողությունների իրական ժամանակի վերահսկում՝ մեկ միասնական անվտանգ հարթակում։</p>
+        <div class="hero-actions">
+          <button class="button primary" type="button" data-tab="demo">Փորձարկել համակարգը <span aria-hidden="true">↗</span></button>
+          <button class="button ghost" type="button" data-tab="architecture"><span class="play" aria-hidden="true">▶</span> Դիտել ճարտարապետությունը</button>
+        </div>
+        <div class="trust-row" aria-label="Հիմնական ցուցանիշներ">
+          <div><strong>24/7</strong><span>Մշտադիտարկում</span></div>
+          <div><strong>&lt;50 մվ</strong><span>Պատասխանման թիրախ</span></div>
+          <div><strong>256-բիթ</strong><span>Շիֆրում</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Zero Trust համակարգի պատկերացում">
+        <div class="orbit orbit-outer"></div>
+        <div class="orbit orbit-inner"></div>
+        <svg class="network" viewBox="0 0 520 520" role="img" aria-label="Անվտանգ ցանցի կիբերային սխեմա" loading="eager">
+          <defs>
+            <radialGradient id="coreGlow"><stop offset="0" stop-color="#10B981" stop-opacity=".9"/><stop offset=".55" stop-color="#10B981" stop-opacity=".12"/><stop offset="1" stop-color="#10B981" stop-opacity="0"/></radialGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <g fill="none" stroke="#00E5FF" stroke-opacity=".24"><circle cx="260" cy="260" r="192"/><circle cx="260" cy="260" r="145" stroke-dasharray="7 9"/><path d="M260 260L260 68M260 260L427 356M260 260L93 356M260 260L126 158M260 260L394 158"/></g>
+          <circle cx="260" cy="260" r="95" fill="url(#coreGlow)"/><g fill="#0B1120" stroke="#10B981" stroke-width="2" filter="url(#glow)"><circle cx="260" cy="260" r="48"/><circle cx="260" cy="68" r="18"/><circle cx="427" cy="356" r="18"/><circle cx="93" cy="356" r="18"/><circle cx="126" cy="158" r="18"/><circle cx="394" cy="158" r="18"/></g><g fill="#00E5FF" filter="url(#glow)"><circle cx="260" cy="260" r="7"/><circle cx="260" cy="68" r="5"/><circle cx="427" cy="356" r="5"/><circle cx="93" cy="356" r="5"/><circle cx="126" cy="158" r="5"/><circle cx="394" cy="158" r="5"/></g>
+        </svg>
+        <div class="scan-card scan-card-top"><span class="pulse-dot"></span><div><small>ՍՏՈՒԳՎԱԾ ՍԵՍԻԱ</small><b>JWT-VERIFY</b></div></div>
+        <div class="scan-card scan-card-bottom"><span class="shield-icon">✓</span><div><small>ԱՌԱՆՁՆԱՀԱՏԿՈՒԹՅՈՒՆ</small><b>RISK: LOW</b></div></div>
+      </div>
+    </section>
+
+    <section class="ticker tab-view" id="home-ticker" aria-label="Համակարգի տեխնիկական ցուցիչներ">
+      <div class="ticker-track">
+        <span><i></i> FASTAPI</span><span><i></i> JWT / OAUTH2</span><span><i></i> SQLAlchemy</span><span><i></i> ABAC / RBAC</span><span><i></i> AES-256</span><span><i></i> PSUTIL</span>
+      </div>
+    </section>
+
+    <section class="section container tab-view" id="project" role="tabpanel" aria-labelledby="nav-project">
+      <div class="section-heading">
+        <div class="eyebrow"><span>02</span> Նախագծի հիմնավորում</div>
+        <h2>Երբեք մի վստահիր, <em>միշտ ստուգիր</em></h2>
+      </div>
+      <div class="project-grid">
+        <article class="project-intro">
+          <p class="lead-text">Zero Trust-ը չի համարում որևէ օգտատեր կամ սարք անվտանգ՝ միայն նրա համար, որ գտնվում է ներքին ցանցում։ Հարթակը ստեղծում է <strong>կենդանի վստահության սահման</strong> յուրաքանչյուր մուտքի դեպքում։</p>
+          <div class="principle-list">
+            <div><span>01</span><p><b>Անընդհատ ստուգում</b><br>Սեսիայի յուրաքանչյուր գործողությունն ունի իր արժանահավատության մակարդակը։</p></div>
+            <div><span>02</span><p><b>Նվազագույն արտոնություն</b><br>Օգտատերը ստանում է միայն իր ֆունկցիոնալ դերին անհրաժեշտ հասանելիությունը։</p></div>
+            <div><span>03</span><p><b>Ապահովել ըստ նախադրյալի</b><br>Բոլոր ռեսուրսներն ունեն փակ և վերահսկվող կապի կանոններ։</p></div>
+          </div>
+        </article>
+        <aside class="quote-card" aria-label="Անվտանգության սկզբունք">
+          <div class="quote-icon">“</div>
+          <blockquote>Ցանցի ներսում գտնվելը ինքնին թույլատվություն չէ։ Վստահության հիմքը ապացույցն է, ոչ թե տեղակայումը։</blockquote>
+          <div class="quote-footer"><span></span><small>ZERO TRUST PRINCIPLE / 2026</small></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section architecture tab-view" id="architecture" role="tabpanel" aria-labelledby="nav-architecture">
+      <div class="container">
+        <div class="architecture-overview" id="architectureOverview">
+        <div class="section-heading split">
+          <div><div class="eyebrow"><span>03</span> Տեխնիկական հիմք</div><h2>Կայուն, մասշտաբային <em>ճարտարապետություն</em></h2></div>
+          <p>Շերտավորված կառուցվածք՝ իրական ժամանակի վերահսկման, տվյալների պաշտպանության և արագ արձագանքի համար։</p>
+        </div>
+        <div class="arch-grid">
+          <button class="stack-card tech-card" type="button" data-tech="fastapi">
+            <span class="card-top"><span>01</span><small>BACKEND CORE</small></span><h3>FastAPI / Flask</h3><p>Ասինխրոն API, մատչելի middleware և բարձր թողունակություն։</p><span class="tech-open">ՏԵՍՆԵԼ ԴԵՐԸ ↗</span>
+          </button>
+          <button class="stack-card tech-card" type="button" data-tech="sqlalchemy">
+            <span class="card-top"><span>02</span><small>DATA LAYER</small></span><h3>SQLAlchemy</h3><p>Անվտանգ ORM մոդելներ, հարաբերական տվյալներ և աուդիտի պատմություն։</p><span class="tech-open">ՏԵՍՆԵԼ ԴԵՐԸ ↗</span>
+          </button>
+          <button class="stack-card tech-card" type="button" data-tech="jwt">
+            <span class="card-top"><span>03</span><small>IDENTITY</small></span><h3>JWT / OAuth2</h3><p>Կարճաժամկետ տոկեններ, RBAC/ABAC քաղաքականություններ և նույնականացում։</p><span class="tech-open">ՏԵՍՆԵԼ ԴԵՐԸ ↗</span>
+          </button>
+          <button class="stack-card tech-card" type="button" data-tech="psutil">
+            <span class="card-top"><span>04</span><small>OBSERVABILITY</small></span><h3>psutil / logging</h3><p>Ռեսուրսների հսկում, կառուցվածքային մատյաններ և անոմալիաների հայտնաբերում։</p><span class="tech-open">ՏԵՍՆԵԼ ԴԵՐԸ ↗</span>
+          </button>
+        </div>
+        </div>
+        <div class="tech-detail-view" id="techDetailView" hidden aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section container tab-view" id="modules" role="tabpanel" aria-labelledby="nav-modules">
+      <div class="section-heading split">
+        <div><div class="eyebrow"><span>04</span> Կառավարման մոդուլներ</div><h2>Բազմաշերտ <em>անվտանգություն</em></h2></div>
+        <p>Յուրաքանչյուր շերտ անկախ է, բայց գործում է միասնական քաղաքականության վերահսկողության ներքո։</p>
+      </div>
+      <div class="module-grid">
+        <article><div class="module-icon">◉</div><span>01</span><h3>Ներկայիս նույնականացում</h3><p>Տոկենի վիճակ, բազմգործոն նույնականացում և սարքի վստահության վարկանիշ։</p><div class="module-line"></div></article>
+        <article><div class="module-icon">⌬</div><span>02</span><h3>Միկրոհատվածավորում</h3><p>Դինամիկ ցանցային հատվածներ և նվազագույն արտոնություններով հասանելիության կանոններ։</p><div class="module-line"></div></article>
+        <article><div class="module-icon">≋</div><span>03</span><h3>Իրական ժամանակի աուդիտ</h3><p>Անվտանգ, անփոփոխ և որոնելի մատյաններ՝ բոլոր ադմինիստրատիվ գործողությունների համար։</p><div class="module-line"></div></article>
+      </div>
+      <div class="code-example-grid">
+        <article class="code-example">
+          <header><div><span>Python</span><b>Տոկենի Zero Trust վավերացում</b></div><button type="button" class="copy-code" data-copy="tokenCode">Պատճենել կոդը</button></header>
+          <pre><code id="tokenCode"><span class="py-decorator">@verify_zero_trust_token</span>
+<span class="py-keyword">async def</span> <span class="py-function">open_resource</span>(request, device_trusted: <span class="py-type">bool</span>):
+    claims = <span class="py-keyword">await</span> request.state.token.claims()
+    role = claims.get(<span class="py-string">"role"</span>)
+
+    <span class="py-keyword">if</span> <span class="py-keyword">not</span> device_trusted:
+        <span class="py-keyword">raise</span> <span class="py-type">MFARequired</span>(<span class="py-string">"Ապահովել լրացուցիչ նույնականացում"</span>)
+
+    <span class="py-keyword">return</span> policy_engine.evaluate(role, claims)</code></pre>
+        </article>
+        <article class="code-example">
+          <header><div><span>Python</span><b>Համակարգային մետրիկների հավաքում</b></div><button type="button" class="copy-code" data-copy="metricsCode">Պատճենել կոդը</button></header>
+          <pre><code id="metricsCode"><span class="py-keyword">import</span> psutil
+<span class="py-keyword">import</span> logging
+
+<span class="py-keyword">def</span> <span class="py-function">collect_security_metrics</span>():
+    metrics = {
+        <span class="py-string">"cpu_percent"</span>: psutil.cpu_percent(interval=<span class="py-number">1</span>),
+        <span class="py-string">"memory_percent"</span>: psutil.virtual_memory().percent,
+        <span class="py-string">"connections"</span>: <span class="py-keyword">len</span>(psutil.net_connections()),
+    }
+    logging.info(<span class="py-string">"zt_metrics"</span>, extra=metrics)
+    <span class="py-keyword">return</span> metrics</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section demo-section tab-view" id="demo" role="tabpanel" aria-labelledby="nav-demo">
+      <div class="container">
+        <div class="section-heading demo-heading">
+          <div class="eyebrow"><span>05</span> Ինտերակտիվ պանել</div>
+          <h2>Ստուգեք մուտքի <em>հավատարմությունը</em></h2>
+        </div>
+        <div class="dashboard">
+          <aside class="dashboard-sidebar" aria-label="Դեմո նավիգացիա">
+            <div class="dash-brand">ZT<span>●</span></div>
+            <button class="dash-nav active" aria-label="Վերահսկողություն" title="Վերահսկողություն">▦</button>
+            <button class="dash-nav" aria-label="Օգտատերեր" title="Օգտատերեր">♙</button>
+            <button class="dash-nav" aria-label="Սարքեր" title="Սարքեր">⌁</button>
+            <button class="dash-nav" aria-label="Մատյաններ" title="Մատյաններ">≡</button>
+          </aside>
+          <div class="dashboard-main">
+            <header class="dash-header"><div><small>ԱՆՎՏԱՆԳՈՒԹՅԱՆ ԿԱԶՄԱԿԵՐՊՉՈՒԹՅՈՒՆ</small><h3>Վերահսկողության կենտրոն</h3></div><div class="live-badge"><span></span> LIVE</div></header>
+            <div class="dashboard-grid">
+              <div class="verify-panel">
+                <div class="panel-title"><span>Մուտքի կապի ստուգում</span><small>REQUEST #ZT-<b id="requestId">1042</b></small></div>
+                <div class="checks">
+                  <label><span>Օգտատերի դերը</span><select id="roleCheck"><option value="Admin">Admin</option><option value="Operator">Operator</option><option value="Guest">Guest</option></select></label>
+                  <label><span>Սարքի կարգավիճակը</span><select id="deviceStatus"><option value="Trusted">Trusted</option><option value="Untrusted">Untrusted</option></select></label>
+                </div>
+                <button class="verify-button" id="verifyBtn" type="button">Ստուգել մուտքը (Simulate Request) <span>→</span></button>
+              </div>
+              <div class="result-panel" id="resultPanel" aria-live="polite">
+                <div class="response-status" id="responseStatus">PENDING</div>
+                <p id="backendResponse">Waiting for Python backend response...</p>
+                <code id="httpResult">HTTP 000 · /api/v1/request</code>
+              </div>
+            </div>
+            <div class="log-panel live-terminal">
+              <div class="panel-title"><span><i class="terminal-dot"></i> Live Logs</span><b id="eventCount">4 events</b></div>
+              <div class="log-stream" id="logStream" aria-live="polite">
+                <div class="log-row"><time>10:42:16</time><span class="ok">ALLOW</span><p>admin · AUTH_SUCCESS · /api/v1/systems</p></div>
+                <div class="log-row"><time>10:41:58</time><span class="ok">VERIFY</span><p>device-04 · TLS_CERT_VALID</p></div>
+                <div class="log-row"><time>10:41:33</time><span class="warn">WARN</span><p>geo-sensor · TOKEN_REFRESH</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><span></span></span><span>ZERO<span class="accent">TRUST</span></span></a><p>Կառավարման մշտադիտարկում՝ առանց անփորձակտոր վստահության։</p></div>
+      <nav aria-label="Ֆուտերի նավիգացիա"><b>Նավիգացիա</b><a href="#project" data-tab="project">Նախագիծ</a><a href="#architecture" data-tab="architecture">Ճարտարապետություն</a><a href="#demo" data-tab="demo">Դեմո պանել</a></nav>
+      <div class="footer-tech"><b>Տեխնոլոգիաներ</b><span>Python · FastAPI · SQLAlchemy</span><span>JWT · OAuth2 · AES-256</span></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 Zero Trust Monitor</span><span><i></i> ՎՍՏԱՀ ԿՈՄՈՆԵՆՏՏԱՇՄԱՐԿ</span></div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
